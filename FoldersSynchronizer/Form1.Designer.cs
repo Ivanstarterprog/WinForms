@@ -28,29 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            LeftFolderFilesTreeView = new TreeView();
-            RightFolderFilesTreeView = new TreeView();
             SynchronizeLeftToRightFolderButton = new Button();
             SynchronizeRightToLeftFolderButton = new Button();
-            HistoryTreeView = new TreeView();
             ChooseLeftFolderButton = new Button();
             ChooseRightFolderButton = new Button();
             ClearHistoryButton = new Button();
+            historyListBox = new ListBox();
+            LeftFolderFilesListBox = new ListBox();
+            RightFolderFilesListBox = new ListBox();
             SuspendLayout();
-            // 
-            // LeftFolderFilesTreeView
-            // 
-            LeftFolderFilesTreeView.Location = new Point(12, 12);
-            LeftFolderFilesTreeView.Name = "LeftFolderFilesTreeView";
-            LeftFolderFilesTreeView.Size = new Size(281, 233);
-            LeftFolderFilesTreeView.TabIndex = 0;
-            // 
-            // RightFolderFilesTreeView
-            // 
-            RightFolderFilesTreeView.Location = new Point(507, 12);
-            RightFolderFilesTreeView.Name = "RightFolderFilesTreeView";
-            RightFolderFilesTreeView.Size = new Size(281, 233);
-            RightFolderFilesTreeView.TabIndex = 1;
             // 
             // SynchronizeLeftToRightFolderButton
             // 
@@ -60,6 +46,7 @@
             SynchronizeLeftToRightFolderButton.TabIndex = 2;
             SynchronizeLeftToRightFolderButton.Text = "<--";
             SynchronizeLeftToRightFolderButton.UseVisualStyleBackColor = true;
+            SynchronizeLeftToRightFolderButton.Click += SynchronizeLeftToRightFolderButton_Click;
             // 
             // SynchronizeRightToLeftFolderButton
             // 
@@ -69,13 +56,7 @@
             SynchronizeRightToLeftFolderButton.TabIndex = 3;
             SynchronizeRightToLeftFolderButton.Text = "-->";
             SynchronizeRightToLeftFolderButton.UseVisualStyleBackColor = true;
-            // 
-            // HistoryTreeView
-            // 
-            HistoryTreeView.Location = new Point(299, 56);
-            HistoryTreeView.Name = "HistoryTreeView";
-            HistoryTreeView.Size = new Size(202, 189);
-            HistoryTreeView.TabIndex = 4;
+            SynchronizeRightToLeftFolderButton.Click += SynchronizeRightToLeftFolderButton_Click;
             // 
             // ChooseLeftFolderButton
             // 
@@ -85,6 +66,7 @@
             ChooseLeftFolderButton.TabIndex = 5;
             ChooseLeftFolderButton.Text = "Выбрать левую папку";
             ChooseLeftFolderButton.UseVisualStyleBackColor = true;
+            ChooseLeftFolderButton.Click += ChooseLeftFolderButton_Click;
             // 
             // ChooseRightFolderButton
             // 
@@ -94,6 +76,7 @@
             ChooseRightFolderButton.TabIndex = 6;
             ChooseRightFolderButton.Text = "Выбрать правую папку";
             ChooseRightFolderButton.UseVisualStyleBackColor = true;
+            ChooseRightFolderButton.Click += ChooseRightFolderButton_Click;
             // 
             // ClearHistoryButton
             // 
@@ -103,34 +86,62 @@
             ClearHistoryButton.TabIndex = 7;
             ClearHistoryButton.Text = "Очистить историю";
             ClearHistoryButton.UseVisualStyleBackColor = true;
+            ClearHistoryButton.Click += ClearHistoryButton_Click;
+            // 
+            // historyListBox
+            // 
+            historyListBox.FormattingEnabled = true;
+            historyListBox.ImeMode = ImeMode.Off;
+            historyListBox.ItemHeight = 15;
+            historyListBox.Location = new Point(299, 51);
+            historyListBox.Name = "historyListBox";
+            historyListBox.Size = new Size(202, 199);
+            historyListBox.TabIndex = 8;
+            // 
+            // LeftFolderFilesListBox
+            // 
+            LeftFolderFilesListBox.FormattingEnabled = true;
+            LeftFolderFilesListBox.ItemHeight = 15;
+            LeftFolderFilesListBox.Location = new Point(12, 15);
+            LeftFolderFilesListBox.Name = "LeftFolderFilesListBox";
+            LeftFolderFilesListBox.Size = new Size(281, 229);
+            LeftFolderFilesListBox.TabIndex = 9;
+            // 
+            // RightFolderFilesListBox
+            // 
+            RightFolderFilesListBox.FormattingEnabled = true;
+            RightFolderFilesListBox.ItemHeight = 15;
+            RightFolderFilesListBox.Location = new Point(507, 12);
+            RightFolderFilesListBox.Name = "RightFolderFilesListBox";
+            RightFolderFilesListBox.Size = new Size(281, 229);
+            RightFolderFilesListBox.TabIndex = 10;
             // 
             // Form
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 318);
+            Controls.Add(RightFolderFilesListBox);
+            Controls.Add(LeftFolderFilesListBox);
+            Controls.Add(historyListBox);
             Controls.Add(ClearHistoryButton);
             Controls.Add(ChooseRightFolderButton);
             Controls.Add(ChooseLeftFolderButton);
-            Controls.Add(HistoryTreeView);
             Controls.Add(SynchronizeRightToLeftFolderButton);
             Controls.Add(SynchronizeLeftToRightFolderButton);
-            Controls.Add(RightFolderFilesTreeView);
-            Controls.Add(LeftFolderFilesTreeView);
             Name = "Form";
             Text = "Синхронизатор Папок";
             ResumeLayout(false);
         }
 
         #endregion
-
-        private TreeView LeftFolderFilesTreeView;
-        private TreeView RightFolderFilesTreeView;
         private Button SynchronizeLeftToRightFolderButton;
         private Button SynchronizeRightToLeftFolderButton;
-        private TreeView HistoryTreeView;
         private Button ChooseLeftFolderButton;
         private Button ChooseRightFolderButton;
         private Button ClearHistoryButton;
+        private ListBox historyListBox;
+        private ListBox LeftFolderFilesListBox;
+        private ListBox RightFolderFilesListBox;
     }
 }
