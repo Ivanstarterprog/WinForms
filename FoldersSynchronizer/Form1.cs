@@ -21,13 +21,11 @@ namespace FoldersSynchronizer
             return rightFolderPath;
         }
 
-        void IView.TrySynchronize(List<string> message)
+        void IView.TryToSynchronize(List<string> historyList)
         {
-            historyListBox.Items.Clear(); // Обновление списка
+            historyListBox.Items.Clear();
 
-            List<string> outputList = message;
-
-            foreach (string output in outputList)
+            foreach (string output in historyList)
             {
                 historyListBox.Items.Add(output);
             }
@@ -37,7 +35,6 @@ namespace FoldersSynchronizer
 
         private void SynchronizeLeftToRightFolderButton_Click(object sender, EventArgs inputEvent)
         {
-            LeftFolderFilesListBox.Items.Clear();
             SynchronizeLeftToRightFolder(sender, inputEvent);
         }
 
@@ -57,12 +54,13 @@ namespace FoldersSynchronizer
 
         private void ShowFoldersFiles()
         {
+            LeftFolderFilesListBox.Items.Clear();
+            RightFolderFilesListBox.Items.Clear();
             if (leftFolderPath != "")
             {
                 DirectoryInfo leftFolderInfo = new DirectoryInfo(leftFolderPath);
                 foreach (FileInfo folderFile in leftFolderInfo.GetFiles())
                 {
-                    LeftFolderFilesListBox.Items.Clear();
                     LeftFolderFilesListBox.Items.Add(folderFile.Name);
                 }
             }
@@ -71,7 +69,6 @@ namespace FoldersSynchronizer
                 DirectoryInfo rightFolderInfo = new DirectoryInfo(rightFolderPath);
                 foreach (FileInfo folderFile in rightFolderInfo.GetFiles())
                 {
-                    RightFolderFilesListBox.Items.Clear();
                     RightFolderFilesListBox.Items.Add(folderFile.Name);
                 }
             }

@@ -8,32 +8,13 @@ namespace FoldersSynchronizer
         string RightFolder();
 
 
-        void TrySynchronize(List<string> message);
+        void TryToSynchronize(List<string> message);
         event EventHandler<EventArgs> SynchronizeLeftToRightFolder;
         event EventHandler<EventArgs> SynchronizeRightToLeftFolder;
     }
 
     class Model
     {
-        public List<string> SynchronizeLeftToRightFolder(string leftFolder, string rightFolder)
-        {
-            List<string> resultofSynchronize = [""];
-            try
-            {
-                DirectoryInfo leftFolderInfo = new DirectoryInfo(leftFolder);
-                DirectoryInfo rightFolderInfo = new DirectoryInfo(rightFolder);
-
-                resultofSynchronize = InnerSynchronizeDirectories(leftFolderInfo, rightFolderInfo);
-            }
-            catch (Exception ex) 
-            {
-                MessageBox.Show("Не выбрана левая папка", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            return resultofSynchronize;
-
-
-        }
-
         public List<string> SynchronizeRightToLeftFolder(string leftFolder, string rightFolder)
         {
             List<string> resultofSynchronize = [""];
@@ -42,16 +23,35 @@ namespace FoldersSynchronizer
                 DirectoryInfo leftFolderInfo = new DirectoryInfo(leftFolder);
                 DirectoryInfo rightFolderInfo = new DirectoryInfo(rightFolder);
 
-                resultofSynchronize = InnerSynchronizeDirectories(rightFolderInfo, leftFolderInfo);
+                resultofSynchronize = synchronizationOfTwoFolders(leftFolderInfo, rightFolderInfo);
             }
-            catch (Exception exeption) 
+            catch (Exception exception) 
+            {
+                MessageBox.Show("Не выбрана левая папка", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return resultofSynchronize;
+
+
+        }
+
+        public List<string> SynchronizeLeftToRightFolder(string leftFolder, string rightFolder)
+        {
+            List<string> resultofSynchronize = [""];
+            try
+            {
+                DirectoryInfo leftFolderInfo = new DirectoryInfo(leftFolder);
+                DirectoryInfo rightFolderInfo = new DirectoryInfo(rightFolder);
+
+                resultofSynchronize = synchronizationOfTwoFolders(rightFolderInfo, leftFolderInfo);
+            }
+            catch (Exception exception) 
             {
                 MessageBox.Show("Не выбрана правая папка", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return resultofSynchronize;
         }
 
-        private List<string> InnerSynchronizeDirectories(DirectoryInfo mainFolderInfo, DirectoryInfo targetFolderInfo)
+        private List<string> synchronizationOfTwoFolders(DirectoryInfo mainFolderInfo, DirectoryInfo targetFolderInfo)
         {
             List<string> resultOfSynchronization = new List<string>();
 
@@ -71,14 +71,14 @@ namespace FoldersSynchronizer
                 }
             }
 
-            foreach (FileInfo directoryFile in targetFolderInfo.GetFiles())
+            foreach (FileInfo folderFile in targetFolderInfo.GetFiles())
             {
-                FileInfo fileInMainDirectory = new FileInfo(Path.Combine(mainFolderInfo.FullName, directoryFile.Name));
+                FileInfo fileInMainDirectory = new FileInfo(Path.Combine(mainFolderInfo.FullName, folderFile.Name));
 
                 if (!fileInMainDirectory.Exists)
                 {
-                    directoryFile.Delete();
-                    resultOfSynchronization.Add($"Файл {directoryFile.Name} удален");
+                    folderFile.Delete();
+                    resultOfSynchronization.Add($"Файл {folderFile.Name} удален");
                 }
             }
 
@@ -105,14 +105,14 @@ namespace FoldersSynchronizer
         {
             List<string> resultOfSynchronization = model.SynchronizeLeftToRightFolder(mainView.LeftFolder(), mainView.RightFolder());
 
-            mainView.TrySynchronize(resultOfSynchronization);
+            mainView.TryToSynchronize(resultOfSynchronization);
         }
 
         private void SynchronizeRightToLeft(object sender, EventArgs inputEvent)
         {
             List<string> resultOfSynchronization = model.SynchronizeRightToLeftFolder(mainView.LeftFolder(), mainView.RightFolder());
 
-            mainView.TrySynchronize(resultOfSynchronization);
+            mainView.TryToSynchronize(resultOfSynchronization);
         }
     }
 
