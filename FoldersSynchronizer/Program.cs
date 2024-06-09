@@ -53,36 +53,36 @@ namespace FoldersSynchronizer
 
         private List<string> synchronizationOfTwoFolders(DirectoryInfo mainFolderInfo, DirectoryInfo targetFolderInfo)
         {
-            List<string> resultOfSynchronization = new List<string>();
+            List<string> historyOfSynchronization = new List<string>();
 
-            foreach (FileInfo folderFile in mainFolderInfo.GetFiles())
+            foreach (FileInfo fileInMainFolderInfo in mainFolderInfo.GetFiles())
             {
-                FileInfo targetFileInTargetFolder = new FileInfo(Path.Combine(targetFolderInfo.FullName, folderFile.Name));
+                FileInfo fileInTargetFolderInfo = new FileInfo(Path.Combine(targetFolderInfo.FullName, fileInMainFolderInfo.Name));
 
-                if (targetFileInTargetFolder.Exists)
+                if (fileInTargetFolderInfo.Exists)
                 {
-                    File.Copy(folderFile.FullName, targetFileInTargetFolder.FullName, true);
-                    resultOfSynchronization.Add($"Файл {folderFile.Name} изменен");
+                    File.Copy(fileInMainFolderInfo.FullName, fileInTargetFolderInfo.FullName, true);
+                    historyOfSynchronization.Add($"Файл {fileInMainFolderInfo.Name} изменен");
                 }
-                if (!targetFileInTargetFolder.Exists)
+                if (!fileInTargetFolderInfo.Exists)
                 {
-                    File.Copy(folderFile.FullName, targetFileInTargetFolder.FullName, true);
-                    resultOfSynchronization.Add($"Файл {folderFile.Name} добавлен");
+                    File.Copy(fileInMainFolderInfo.FullName, fileInTargetFolderInfo.FullName, true);
+                    historyOfSynchronization.Add($"Файл {fileInMainFolderInfo.Name} добавлен");
                 }
             }
 
-            foreach (FileInfo folderFile in targetFolderInfo.GetFiles())
+            foreach (FileInfo fileInTargetFolderInfo in targetFolderInfo.GetFiles())
             {
-                FileInfo fileInMainDirectory = new FileInfo(Path.Combine(mainFolderInfo.FullName, folderFile.Name));
+                FileInfo fileInMainFolderInfo = new FileInfo(Path.Combine(mainFolderInfo.FullName, fileInTargetFolderInfo.Name));
 
-                if (!fileInMainDirectory.Exists)
+                if (!fileInMainFolderInfo.Exists)
                 {
-                    folderFile.Delete();
-                    resultOfSynchronization.Add($"Файл {folderFile.Name} удален");
+                    fileInTargetFolderInfo.Delete();
+                    historyOfSynchronization.Add($"Файл {fileInTargetFolderInfo.Name} удален");
                 }
             }
 
-            return resultOfSynchronization;
+            return historyOfSynchronization;
         }
     }
 
@@ -103,16 +103,16 @@ namespace FoldersSynchronizer
 
         private void SynchronizeLeftToRight(object sender, EventArgs inputEvent)
         {
-            List<string> resultOfSynchronization = model.SynchronizeLeftToRightFolder(mainView.LeftFolder(), mainView.RightFolder());
+            List<string> historyOfSynchronization = model.SynchronizeLeftToRightFolder(mainView.LeftFolder(), mainView.RightFolder());
 
-            mainView.TryToSynchronize(resultOfSynchronization);
+            mainView.TryToSynchronize(historyOfSynchronization);
         }
 
         private void SynchronizeRightToLeft(object sender, EventArgs inputEvent)
         {
-            List<string> resultOfSynchronization = model.SynchronizeRightToLeftFolder(mainView.LeftFolder(), mainView.RightFolder());
+            List<string> historyOfSynchronization = model.SynchronizeRightToLeftFolder(mainView.LeftFolder(), mainView.RightFolder());
 
-            mainView.TryToSynchronize(resultOfSynchronization);
+            mainView.TryToSynchronize(historyOfSynchronization);
         }
     }
 

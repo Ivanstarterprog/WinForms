@@ -21,16 +21,15 @@ namespace FoldersSynchronizer
             return rightFolderPath;
         }
 
-        void IView.TryToSynchronize(List<string> historyList)
+        void IView.TryToSynchronize(List<string> historyOfSynchronization)
         {
             historyListBox.Items.Clear();
 
-            foreach (string output in historyList)
+            foreach (string historyStamp in historyOfSynchronization)
             {
-                historyListBox.Items.Add(output);
+                historyListBox.Items.Add(historyStamp);
             }
             ShowFoldersFiles();
-
         }
 
         private void SynchronizeLeftToRightFolderButton_Click(object sender, EventArgs inputEvent)
@@ -48,7 +47,6 @@ namespace FoldersSynchronizer
             {
                 return folderBrowserDialog.SelectedPath;
             }
-
             return null;
         }
 
