@@ -7,7 +7,6 @@ namespace FoldersSynchronizer
         string LeftFolder();
         string RightFolder();
 
-
         void TryToSynchronize(List<string> message);
         event EventHandler<EventArgs> SynchronizeLeftToRightFolder;
         event EventHandler<EventArgs> SynchronizeRightToLeftFolder;
@@ -17,38 +16,41 @@ namespace FoldersSynchronizer
     {
         public List<string> SynchronizeRightToLeftFolder(string leftFolder, string rightFolder)
         {
-            List<string> resultofSynchronize = [""];
+            List<string> resultOfSynchronization = [""];
+
             try
             {
                 DirectoryInfo leftFolderInfo = new DirectoryInfo(leftFolder);
                 DirectoryInfo rightFolderInfo = new DirectoryInfo(rightFolder);
-
-                resultofSynchronize = synchronizationOfTwoFolders(leftFolderInfo, rightFolderInfo);
+                resultOfSynchronization = synchronizationOfTwoFolders(leftFolderInfo, rightFolderInfo);
             }
             catch (Exception exception) 
             {
-                MessageBox.Show("Не выбрана левая папка", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("ГЌГҐ ГўГ»ГЎГ°Г Г­Г  Г«ГҐГўГ Гї ГЇГ ГЇГЄГ ", "ГЋГёГЁГЎГЄГ ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            return resultofSynchronize;
+
+            return resultOfSynchronization;
 
 
         }
 
         public List<string> SynchronizeLeftToRightFolder(string leftFolder, string rightFolder)
         {
-            List<string> resultofSynchronize = [""];
+            List<string> resultOfSynchronization = [""];
+
             try
             {
                 DirectoryInfo leftFolderInfo = new DirectoryInfo(leftFolder);
                 DirectoryInfo rightFolderInfo = new DirectoryInfo(rightFolder);
 
-                resultofSynchronize = synchronizationOfTwoFolders(rightFolderInfo, leftFolderInfo);
+                resultOfSynchronization = synchronizationOfTwoFolders(rightFolderInfo, leftFolderInfo);
             }
             catch (Exception exception) 
             {
-                MessageBox.Show("Не выбрана правая папка", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("ГЌГҐ ГўГ»ГЎГ°Г Г­Г  ГЇГ°Г ГўГ Гї ГЇГ ГЇГЄГ ", "ГЋГёГЁГЎГЄГ ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            return resultofSynchronize;
+
+            return resultOfSynchronization;
         }
 
         private List<string> synchronizationOfTwoFolders(DirectoryInfo mainFolderInfo, DirectoryInfo targetFolderInfo)
@@ -62,12 +64,12 @@ namespace FoldersSynchronizer
                 if (fileInTargetFolderInfo.Exists)
                 {
                     File.Copy(fileInMainFolderInfo.FullName, fileInTargetFolderInfo.FullName, true);
-                    historyOfSynchronization.Add($"Файл {fileInMainFolderInfo.Name} изменен");
+                    historyOfSynchronization.Add($"Г”Г Г©Г« {fileInMainFolderInfo.Name} ГЁГ§Г¬ГҐГ­ГҐГ­");
                 }
                 if (!fileInTargetFolderInfo.Exists)
                 {
                     File.Copy(fileInMainFolderInfo.FullName, fileInTargetFolderInfo.FullName, true);
-                    historyOfSynchronization.Add($"Файл {fileInMainFolderInfo.Name} добавлен");
+                    historyOfSynchronization.Add($"Г”Г Г©Г« {fileInMainFolderInfo.Name} Г¤Г®ГЎГ ГўГ«ГҐГ­");
                 }
             }
 
@@ -78,7 +80,7 @@ namespace FoldersSynchronizer
                 if (!fileInMainFolderInfo.Exists)
                 {
                     fileInTargetFolderInfo.Delete();
-                    historyOfSynchronization.Add($"Файл {fileInTargetFolderInfo.Name} удален");
+                    historyOfSynchronization.Add($"Г”Г Г©Г« {fileInTargetFolderInfo.Name} ГіГ¤Г Г«ГҐГ­");
                 }
             }
 
@@ -95,9 +97,8 @@ namespace FoldersSynchronizer
         {
             mainView = inputView;
             model = new Model();
-
-            mainView.SynchronizeLeftToRightFolder += new EventHandler<EventArgs>(SynchronizeLeftToRight);
-            mainView.SynchronizeRightToLeftFolder += new EventHandler<EventArgs>(SynchronizeRightToLeft);
+       mainView.SynchronizeLeftToRightFolder += new EventHandler<EventArgs>(SynchronizeLeftToRight);
+mainView.SynchronizeRightToLeftFolder += new EventHandler<EventArgs>(SynchronizeRightToLeft);
         }
 
 
