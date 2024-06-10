@@ -6,7 +6,6 @@ namespace FoldersSynchronizer
     {
         string LeftFolder();
         string RightFolder();
-
         void TryToSynchronize(List<string> message);
         event EventHandler<EventArgs> SynchronizeLeftToRightFolder;
         event EventHandler<EventArgs> SynchronizeRightToLeftFolder;
@@ -66,6 +65,7 @@ namespace FoldersSynchronizer
                     File.Copy(fileInMainFolderInfo.FullName, fileInTargetFolderInfo.FullName, true);
                     historyOfSynchronization.Add($"Ôàéë {fileInMainFolderInfo.Name} èçìåíåí");
                 }
+
                 if (!fileInTargetFolderInfo.Exists)
                 {
                     File.Copy(fileInMainFolderInfo.FullName, fileInTargetFolderInfo.FullName, true);
@@ -97,8 +97,8 @@ namespace FoldersSynchronizer
         {
             mainView = inputView;
             model = new Model();
-       mainView.SynchronizeLeftToRightFolder += new EventHandler<EventArgs>(SynchronizeLeftToRight);
-mainView.SynchronizeRightToLeftFolder += new EventHandler<EventArgs>(SynchronizeRightToLeft);
+            mainView.SynchronizeLeftToRightFolder += new EventHandler<EventArgs>(SynchronizeLeftToRight);
+            mainView.SynchronizeRightToLeftFolder += new EventHandler<EventArgs>(SynchronizeRightToLeft);
         }
 
 

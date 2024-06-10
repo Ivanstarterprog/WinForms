@@ -7,10 +7,12 @@ namespace FoldersSynchronizer
             InitializeComponent();
             Presenter programPresenter = new Presenter(this);
         }
+
         string leftFolderPath = "";
         string rightFolderPath = "";
         public event EventHandler<EventArgs> SynchronizeLeftToRightFolder;
         public event EventHandler<EventArgs> SynchronizeRightToLeftFolder;
+
         string IView.LeftFolder()
         {
             return leftFolderPath;
@@ -29,6 +31,7 @@ namespace FoldersSynchronizer
             {
                 historyListBox.Items.Add(historyStamp);
             }
+
             ShowFoldersFiles();
         }
 
@@ -43,10 +46,12 @@ namespace FoldersSynchronizer
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
             folderBrowserDialog.SelectedPath = Directory.GetCurrentDirectory();
             DialogResult result = folderBrowserDialog.ShowDialog();
+
             if (result == DialogResult.OK)
             {
                 return folderBrowserDialog.SelectedPath;
             }
+
             return null;
         }
 
@@ -54,6 +59,7 @@ namespace FoldersSynchronizer
         {
             LeftFolderFilesListBox.Items.Clear();
             RightFolderFilesListBox.Items.Clear();
+
             if (leftFolderPath != "")
             {
                 DirectoryInfo leftFolderInfo = new DirectoryInfo(leftFolderPath);
@@ -62,6 +68,7 @@ namespace FoldersSynchronizer
                     LeftFolderFilesListBox.Items.Add(folderFile.Name);
                 }
             }
+
             if (rightFolderPath != "")
             {
                 DirectoryInfo rightFolderInfo = new DirectoryInfo(rightFolderPath);
@@ -75,11 +82,13 @@ namespace FoldersSynchronizer
         private void ChooseLeftFolderButton_Click(object sender, EventArgs inputEvent)
         {
             string folderPath = SelectFolderFromDialog();
+
             if (string.IsNullOrEmpty(folderPath))
             {
                 MessageBox.Show("Выбор папки прерван", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             leftFolderPath = folderPath;
             ShowFoldersFiles();
         }
@@ -92,11 +101,13 @@ namespace FoldersSynchronizer
         private void ChooseRightFolderButton_Click(object sender, EventArgs inputEvent)
         {
             string folderPath = SelectFolderFromDialog();
+
             if (string.IsNullOrEmpty(folderPath))
             {
                 MessageBox.Show("Выбор папки прерван", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             rightFolderPath = folderPath;
             ShowFoldersFiles();
         }
